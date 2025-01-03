@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -27,8 +28,8 @@ public class MovieController {
     private final MovieService movieService;
 
     @GetMapping("movie/all")
-    public ResponseEntity<String> getAllMovies() {
-        final List<String> movies = movieService.getAllMovies().stream().map(MovieDto::toString).toList();
+    public ResponseEntity<String> getAllMovies(@RequestParam("pageNr") int pageNr, @RequestParam("pageSize") int pageSize) {
+        final List<String> movies = movieService.getAllMovies(pageNr, pageSize).stream().map(MovieDto::toString).toList();
 
         return ResponseEntity.ok(String.join("\n", movies));
     }

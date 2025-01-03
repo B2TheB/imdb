@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -31,8 +32,8 @@ public class RatingController {
     private final RatingService ratingService;
 
     @GetMapping("rating/all")
-    public ResponseEntity<String> getAllRatings() {
-        final List<String> ratings = ratingService.getAllRatings().stream().map(RatingDto::toString).toList();
+    public ResponseEntity<String> getAllRatings(@RequestParam("pageNr") int pageNr, @RequestParam("pageSize") int pageSize) {
+        final List<String> ratings = ratingService.getAllRatings(pageNr, pageSize).stream().map(RatingDto::toString).toList();
 
         return ResponseEntity.ok(String.join("\n", ratings));
     }

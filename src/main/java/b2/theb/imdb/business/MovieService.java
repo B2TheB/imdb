@@ -2,6 +2,7 @@ package b2.theb.imdb.business;
 
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import b2.theb.imdb.business.dto.MovieDto;
@@ -16,8 +17,8 @@ public class MovieService {
 
     private final MovieRepository movieRepository;
 
-    public List<MovieDto> getAllMovies() {
-        return movieRepository.findAll().stream().map(this::toDto).toList();
+    public List<MovieDto> getAllMovies(final int pageNr, final int pageSize) {
+        return movieRepository.findAll(PageRequest.of(pageNr, pageSize)).stream().map(this::toDto).toList();
     }
 
     public List<MovieDto> getHighRateMovies() {

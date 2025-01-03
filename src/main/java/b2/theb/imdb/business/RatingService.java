@@ -2,6 +2,7 @@ package b2.theb.imdb.business;
 
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +25,8 @@ public class RatingService {
     private final UserService userService;
     private final MovieService movieService;
 
-    public List<RatingDto> getAllRatings() {
-        return ratingRepository.findAll().stream().map(this::toDto).toList();
+    public List<RatingDto> getAllRatings(final int pageNr, final int pageSize) {
+        return ratingRepository.findAll(PageRequest.of(pageNr, pageSize)).stream().map(this::toDto).toList();
     }
 
     @Transactional
